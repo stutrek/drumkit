@@ -1,0 +1,46 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Leap Test</title>
+		<script src="polevault/leapjs/leap.js"></script>
+		<script src="polevault/lib/sylvester.src.js"></script>
+		<script src="polevault/lib/require.js"></script>
+	</head>
+	<body>
+		<div id="container"></div>
+        <audio src="samples/909/kick.ogg" data-type="kick" preload="auto" autobuffer></audio>
+        <audio src="samples/909/snare.ogg" data-type="snare" preload="auto" autobuffer></audio>
+        <audio src="samples/909/chh.ogg" data-type="chh" preload="auto" autobuffer></audio>
+        <audio src="samples/909/ohh.ogg" data-type="ohh" preload="auto" autobuffer></audio>
+        <audio src="samples/909/tomh.ogg" data-type="tomh" preload="auto" autobuffer></audio>
+        <audio src="samples/909/rim.ogg" data-type="rim" preload="auto" autobuffer></audio>
+        <audio src="samples/909/ride.ogg" data-type="ride" preload="auto" autobuffer></audio>
+        <audio src="samples/909/clap.ogg" data-type="clap" preload="auto" autobuffer></audio>
+
+	</body>
+	<script type="text/javascript">
+		
+		requirejs(['polevault/polevault'], function( polevault ) {
+
+			var drumMap = {
+				'punch': document.querySelector('[data-type=tomh]'),
+				'dribble': document.querySelector('[data-type=ohh]'),
+				'tap': document.querySelector('[data-type=chh]'),
+				'knock': document.querySelector('[data-type=snare]')
+			};
+
+
+
+			polevault.on('*', function( type ){
+				if ( type !== 'frame' ) {
+					console.log.apply(console, arguments);
+				}
+
+				if (drumMap[type]) {
+					drumMap[type].currentTime = 0;
+					drumMap[type].play();
+				}
+			})
+		});
+	</script>
+</html>
